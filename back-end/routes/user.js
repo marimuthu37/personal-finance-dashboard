@@ -114,4 +114,14 @@ router.get("/summary/last-three/:userId", async (req, res) => {
     }
 });
 
+router.get("/financial-data", (req, res) => {
+    db.query("SELECT * FROM financial_data", (err, results) => {
+        if (err) {
+            console.error("❌ Database Error:", err);
+            return res.status(500).json({ error: "Database error" });
+        }
+        res.json(results);
+    });
+});
+
 module.exports = router;

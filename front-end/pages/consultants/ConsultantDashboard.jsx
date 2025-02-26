@@ -62,7 +62,7 @@ const ConsultantDashboard = () => {
             <>
               <div className="flex flex-col items-center">
                 <img
-                  src="https://dummyimage.com/100"
+                  src="https://static.vecteezy.com/system/resources/thumbnails/005/544/718/small_2x/profile-icon-design-free-vector.jpg"
                   alt="Consultant Profile"
                   className="w-24 h-24 rounded-full mb-4 border"
                   onError={(e) => (e.target.src = "https://www.gravatar.com/avatar/?d=mp")}
