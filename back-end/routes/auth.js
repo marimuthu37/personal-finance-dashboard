@@ -47,13 +47,7 @@ router.post("/signup", async (req, res) => {
                 const userId = result.insertId;
                 const token = jwt.sign({ id: userId, role }, process.env.JWT_SECRET, { expiresIn: "1h" });
 
-                res.status(201).json({
-                    id: userId,
-                    name,
-                    email,
-                    role,
-                    token,
-                    message: "Signup successful!"
+                res.status(201).json({ id: userId, name, email, role, token, message: "Signup successful!"
                 });
             });
         });

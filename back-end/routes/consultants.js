@@ -8,11 +8,11 @@ const router = express.Router();
 const verifyToken = (req, res, next) => {
     const authHeader = req.headers.authorization;
     if (!authHeader) {
-        return res.status(403).json({ error: "Access denied. No token provided." });
+        return res.status(401).json({ error: "Access denied. No token provided." });
     }
 
     const token = authHeader.split(" ")[1];
-    if (!token) return res.status(403).json({ error: "Invalid token format." });
+    if (!token) return res.status(401).json({ error: "Invalid token format." });
 
     jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
         if (err) return res.status(401).json({ error: "Invalid token." });
@@ -50,7 +50,6 @@ router.get("/data/:id", verifyToken, (req, res) => {
 
 router.get("/summary/:id", (req, res) => {
     const consultantId = Number(req.params.id);
-    console.log("Fetching summary for consultant ID:", consultantId);
   
     const query = `
       SELECT cr.id, u.name AS userName, cr.request_date AS date, cr.status  
@@ -64,9 +63,7 @@ router.get("/summary/:id", (req, res) => {
       if (err) {
         console.error("Database Error:", err);
         return res.status(500).json({ error: "Database error" });
-      }
-  
-      console.log("API Response Sent to Frontend:", results); 
+      } 
       res.json(results);
     });
   });
@@ -76,7 +73,7 @@ router.get("/all-ids", (req, res) => {
 
     db.query(query, (err, results) => {
         if (err) {
-            console.error("❌ Error fetching consultant IDs:", err);
+            console.error(" Error fetching consultant IDs:", err);
             return res.status(500).json({ error: "Database error" });
         }
 
@@ -113,8 +110,8 @@ router.get("/requests/:consultantId", verifyToken, async (req, res) => {
     try {
         const query = `
             SELECT cr.id, cr.user_id, cr.consultant_id, cr.status, 
-                   cr.request_date,  
-                   u.name AS user_name
+            cr.request_date,  
+            u.name AS user_name
             FROM consultant_requests cr
             LEFT JOIN user_details u ON cr.user_id = u.id
             WHERE cr.consultant_id = ?;

@@ -56,8 +56,7 @@ router.put("/summary/update/:id", (req, res) => {
         return res.status(400).json({ error: "User ID is required" });
     }
 
-    const query = `UPDATE payment_summary 
-                   SET description=?, category=?, amount=?, payment_method=? 
+    const query = `UPDATE payment_summary SET description=?, category=?, amount=?, payment_method=? 
                    WHERE id=? AND user_id=?`;
 
     db.query(query, [description, category, amount, payment_method, id, userId], (err, results) => {
@@ -94,13 +93,11 @@ router.get("/summary/last-three/:userId", async (req, res) => {
     }
 
     try {
-        const sql = `SELECT id, description, amount, payment_method
-                     FROM payment_summary
+        const sql = `SELECT id, description, amount, payment_method FROM payment_summary
                      WHERE user_id = ? 
-                     ORDER BY created_at DESC 
-                     LIMIT 3`;
+                     ORDER BY created_at DESC LIMIT 3`;
 
-        const [rows] = await db.promise().query(sql, [userId]);
+        const [rows] = await db.query(sql, [userId]);
         res.json(rows);
     } catch (error) {
         console.error("Error fetching transactions:", error);
