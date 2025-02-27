@@ -1,55 +1,33 @@
-import React, { useState, useEffect } from "react";
-import { Bar } from "react-chartjs-2";
-import axios from "axios";
-import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from "chart.js";
-import AdminNavbar from './../../src/components/AdminNavbar';
-
-ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
+import React from "react";
+import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer } from "recharts";
+import AdminNavbar from "../../src/components/AdminNavbar";
 
 const AdminDashboard = () => {
-  const [userStats, setUserStats] = useState([]);
 
-  useEffect(() => {
-    const fetchUserStats = async () => {
-      try {
-        const response = await axios.get("http://localhost:7777/admin/stats");
-        const formattedData = response.data.map((item) => ({
-          label: item.date,
-          value: item.count,
-        }));
-        setUserStats(formattedData);
-      } catch (error) {
-        console.error("Error fetching user stats:", error);
-      }
-    };
-
-    fetchUserStats();
-  }, []);
-
-  const chartData = {
-    labels: userStats.map((entry) => entry.label),
-    datasets: [
-      {
-        label: "New Users",
-        data: userStats.map((entry) => entry.value),
-        backgroundColor: "rgba(255, 99, 132, 0.6)",
-      },
-    ],
-  };
+  const data = [
+    { month: "Jan", users: 120, consultants: 30 },
+    { month: "Feb", users: 150, consultants: 40 },
+    { month: "Mar", users: 170, consultants: 35 },
+    { month: "Apr", users: 200, consultants: 50 },
+    { month: "May", users: 220, consultants: 55 },
+    { month: "Jun", users: 250, consultants: 60 },
+  ];
 
   return (
-  <div>
-    <AdminNavbar />
-    <div className="p-6 bg-gray-100 min-h-screen">
-      <h1 className="text-2xl font-bold mb-4 text-center text-blue-600">Admin Dashboard</h1>
-
-      <div className="bg-white shadow-lg p-6 rounded-lg max-w-4xl mx-auto">
-        {userStats.length > 0 ? (
-          <Bar data={chartData} />
-        ) : (
-          <p className="text-center text-gray-500">No user statistics available.</p>
-        )}
-      </div>
+    <div>
+      <AdminNavbar />
+    <div className="p-6 bg-white shadow-lg rounded-lg">
+      <h2 className="text-xl font-semibold text-center mb-4">Users vs Consultants Per Month</h2>
+      <ResponsiveContainer width="100%" height={300}>
+        <BarChart data={data}>
+          <XAxis dataKey="month" />
+          <YAxis />
+          <Tooltip />
+          <Legend />
+          <Bar dataKey="users" fill="#4A90E2" name="Users" />
+          <Bar dataKey="consultants" fill="#50C878" name="Consultants" />
+        </BarChart>
+      </ResponsiveContainer>
     </div>
     </div>
   );

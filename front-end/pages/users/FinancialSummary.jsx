@@ -168,7 +168,7 @@ const FinancialSummary = () => {
             </div>
           )}
 
-          {/* Display Transactions */}
+
           <div className="mt-6">
             {loading ? (
               <p className="text-center text-gray-600">Loading transactions...</p>
