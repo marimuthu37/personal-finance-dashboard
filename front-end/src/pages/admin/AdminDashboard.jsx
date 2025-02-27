@@ -1,6 +1,6 @@
 import React from "react";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer } from "recharts";
-import AdminNavbar from "../../src/components/AdminNavbar";
+import AdminNavbar from "../../components/AdminNavbar";
 
 const AdminDashboard = () => {
 

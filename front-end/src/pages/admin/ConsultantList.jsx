@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import AdminNavbar from "../../src/components/AdminNavbar";
+import AdminNavbar from "../../components/AdminNavbar";
 
 const ConsultantList = () => {
   const [consultants, setConsultants] = useState([]);

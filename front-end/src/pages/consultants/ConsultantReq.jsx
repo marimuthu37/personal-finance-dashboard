@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
-import ConsultantNavbar from "../../src/components/ConsultantNavbar";
+import ConsultantNavbar from "../../components/ConsultantNavbar";
 
 const ConsultantReq = () => {
   const [requests, setRequests] = useState([]);

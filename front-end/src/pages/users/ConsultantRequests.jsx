@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import Navbar from "../../src/components/NavBar";
+import Navbar from "../../components/NavBar";
 
 const ConsultantRequest = () => {
   const [consultants, setConsultants] = useState([]);

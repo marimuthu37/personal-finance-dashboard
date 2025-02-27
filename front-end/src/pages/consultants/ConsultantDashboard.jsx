@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import ConsultantNavbar from "../../src/components/ConsultantNavbar";
+import ConsultantNavbar from "../../components/ConsultantNavbar";
 
 const ConsultantDashboard = () => {
   const [consultantInfo, setConsultantInfo] = useState(null);

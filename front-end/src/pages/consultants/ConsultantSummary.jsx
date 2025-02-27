@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import ConsultantNavbar from "../../src/components/ConsultantNavbar";
+import ConsultantNavbar from "../../components/ConsultantNavbar";
 
 const ConsultantSummary = () => {
   const [summary, setSummary] = useState([]);

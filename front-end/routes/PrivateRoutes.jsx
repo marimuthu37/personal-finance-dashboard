@@ -1,15 +1,15 @@
 import React from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
-import UserDashboard from "../pages/users/UserDashboard";
-import ConsultantDashboard from "../pages/consultants/ConsultantDashboard";
-import AdminDashboard from "../pages/admin/AdminDashboard";
-import FinancialSummary from "../pages/users/FinancialSummary";
-import ConsultantRequests from "../pages/users/ConsultantRequests";
-import ConsultantSummary from "../pages/consultants/ConsultantSummary";
-import UserList from "../pages/admin/UserList";
-import ConsultantList from "../pages/admin/ConsultantList";
-import ConsultationSummary from "../pages/admin/ConsultationSummary";
-import ConsultantReq from "../pages/consultants/ConsultantReq";
+import UserDashboard from "../src/pages/users/UserDashboard";
+import ConsultantDashboard from "../src/pages/consultants/ConsultantDashboard";
+import AdminDashboard from "../src/pages/admin/AdminDashboard";
+import FinancialSummary from "../src/pages/users/FinancialSummary";
+import ConsultantRequests from "../src/pages/users/ConsultantRequests";
+import ConsultantSummary from "../src/pages/consultants/ConsultantSummary";
+import UserList from "../src/pages/admin/UserList";
+import ConsultantList from "../src/pages/admin/ConsultantList";
+import ConsultationSummary from "../src/pages/admin/ConsultationSummary";
+import ConsultantReq from "../src/pages/consultants/ConsultantReq";
 
 const PrivateRoute = ({ children, allowedRoles }) => {
     const user = JSON.parse(localStorage.getItem("user"));
