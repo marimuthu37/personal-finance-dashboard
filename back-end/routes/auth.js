@@ -5,14 +5,12 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
-// User role to table mapping
 const tableMap = {
     user: "user_details",
     consultant: "consultants",
     admin: "admin"
 };
 
-// Signup Route
 router.post("/signup", async (req, res) => {
     const { name, email, password, role } = req.body;
 
@@ -26,30 +24,27 @@ router.post("/signup", async (req, res) => {
     }
 
     try {
-        // Check if user already exists
         const checkQuery = `SELECT id FROM ${tableName} WHERE email = ?`;
         db.query(checkQuery, [email], async (err, results) => {
             if (err) {
-                console.error("❌ Database error:", err);
+                console.error("Database error:", err);
                 return res.status(500).json({ error: "Database error" });
             }
             if (results.length > 0) {
                 return res.status(400).json({ error: "User already exists!" });
             }
 
-            // Hash password securely
             const salt = await bcrypt.genSalt(10);
             const hashedPassword = await bcrypt.hash(password, salt);
 
-            // Insert new user
             const insertQuery = `INSERT INTO ${tableName} (name, email, password) VALUES (?, ?, ?)`;
             db.query(insertQuery, [name, email, hashedPassword], (err, result) => {
                 if (err) {
-                    console.error("❌ Insert error:", err);
+                    console.error("Insert error:", err);
                     return res.status(500).json({ error: "Database error" });
                 }
 
-                const userId = result.insertId; // Get inserted user ID
+                const userId = result.insertId;
                 const token = jwt.sign({ id: userId, role }, process.env.JWT_SECRET, { expiresIn: "1h" });
 
                 res.status(201).json({
@@ -63,12 +58,11 @@ router.post("/signup", async (req, res) => {
             });
         });
     } catch (error) {
-        console.error("❌ Signup error:", error);
+        console.error("Signup error:", error);
         res.status(500).json({ error: "Internal server error" });
     }
 });
 
-// Login Route
 router.post("/login", (req, res) => {
     const { email, password } = req.body;
 
@@ -81,7 +75,7 @@ router.post("/login", (req, res) => {
             const query = `SELECT * FROM ${table} WHERE email = ?`;
             db.query(query, [email], async (err, results) => {
                 if (err) {
-                    console.error("❌ Database error:", err);
+                    console.error("Database error:", err);
                     return reject("Database error");
                 }
 
@@ -111,7 +105,7 @@ router.post("/login", (req, res) => {
                 return res.status(401).json({ error: "Invalid email or password" });
             }
         } catch (error) {
-            console.error("❌ Login error:", error);
+            console.error("Login error:", error);
             return res.status(500).json({ error: "Internal server error" });
         }
     })();

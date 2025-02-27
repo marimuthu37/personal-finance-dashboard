@@ -44,7 +44,6 @@ const Login = () => {
         <h2 className="text-3xl font-bold text-center text-green-700 mb-6">Welcome Back</h2>
         <p className="text-center text-gray-600 mb-6">Login to your account</p>
 
-        {/* Email Input */}
         <div className="mb-4">
           <label className="block text-gray-700 font-medium mb-1">Email</label>
           <input
@@ -56,7 +55,6 @@ const Login = () => {
           />
         </div>
 
-        {/* Password Input */}
         <div className="mb-4">
           <label className="block text-gray-700 font-medium mb-1">Password</label>
           <input
@@ -68,7 +66,6 @@ const Login = () => {
           />
         </div>
 
-        {/* Login Button */}
         <button
           onClick={isLogin}
           className="w-full bg-green-600 text-white py-3 mt-5 rounded-lg font-semibold text-lg hover:bg-green-700 transition duration-300 shadow-md"
@@ -77,7 +74,6 @@ const Login = () => {
           {loading ? "Logging in..." : "Login"}
         </button>
 
-        {/* Signup Redirect */}
         <p className="text-center text-gray-600 mt-4">Don't have an account?</p>
         <button
           onClick={() => navigate("/signup")}

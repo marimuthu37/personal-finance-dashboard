@@ -7,7 +7,6 @@ const ConsultantRequest = () => {
   const [userId, setUserId] = useState(null);
 
   useEffect(() => {
-    // Get user ID from local storage
     const storedUser = localStorage.getItem("user");
 
     if (storedUser) {
@@ -26,7 +25,7 @@ const ConsultantRequest = () => {
       console.warn("No user found in localStorage.");
     }
 
-    // Fetch consultants from backend
+
     const fetchConsultants = async () => {
       try {
         const response = await axios.get("http://localhost:7777/api/consultants");
@@ -46,8 +45,7 @@ const ConsultantRequest = () => {
     }
 
     try {
-      const token = localStorage.getItem("token"); // Get token from local storage
-
+      const token = localStorage.getItem("token"); 
       const response = await axios.post(
         "http://localhost:7777/api/consultants/request",
         {

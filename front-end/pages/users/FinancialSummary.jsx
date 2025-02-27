@@ -28,7 +28,6 @@ const FinancialSummary = () => {
     }
   }, []);
 
-  // Fetch Summary Data
   const fetchSummaryData = async (id) => {
     setLoading(true);
     try {
@@ -43,12 +42,10 @@ const FinancialSummary = () => {
     }
   };
 
-  // Handle Input Changes
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // Handle Form Submission (Add or Update)
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!userId) {
@@ -60,10 +57,8 @@ const FinancialSummary = () => {
       setLoading(true);
 
       if (isEditing) {
-        // Update Transaction
         await axios.put(`http://localhost:7777/api/user/summary/update/${editTransactionId}`, { ...formData, userId });
       } else {
-        // Add New Transaction
         await axios.post("http://localhost:7777/api/user/summary/add", { ...formData, userId });
       }
 
@@ -78,7 +73,6 @@ const FinancialSummary = () => {
     }
   };
 
-  // Handle Delete Transaction
   const handleDelete = async (id) => {
     if (!userId) {
       alert("User ID is missing. Please log in.");
@@ -99,7 +93,6 @@ const FinancialSummary = () => {
     }
   };
 
-  // Open Modal for Editing
   const handleEdit = (transaction) => {
     setFormData({
       description: transaction.description,
@@ -112,7 +105,6 @@ const FinancialSummary = () => {
     setShowModal(true);
   };
 
-  // Reset Form
   const resetForm = () => {
     setFormData({
       description: "",

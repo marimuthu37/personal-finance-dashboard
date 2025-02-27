@@ -5,7 +5,6 @@ require("dotenv").config();
 
 const router = express.Router();
 
-// ✅ Middleware to verify token
 const verifyToken = (req, res, next) => {
     const authHeader = req.headers.authorization;
     if (!authHeader) {
@@ -22,23 +21,21 @@ const verifyToken = (req, res, next) => {
     });
 };
 
-// ✅ Fetch all consultants (Public route)
 router.get("/", async (req, res) => {
     try {
         db.query("SELECT id, name, email, specialization, created_at FROM consultants", (err, results) => {
             if (err) {
-                console.error("❌ Database error:", err);
+                console.error("Database error:", err);
                 return res.status(500).json({ error: "Database error." });
             }
             res.status(200).json(results);
         });
     } catch (error) {
-        console.error("❌ Error fetching consultants:", error);
+        console.error("Error fetching consultants:", error);
         res.status(500).json({ error: "Internal server error." });
     }
 });
 
-// ✅ Fetch specific consultant data (Requires authentication)
 router.get("/data/:id", verifyToken, (req, res) => {
     const { id } = req.params;
 
@@ -51,10 +48,9 @@ router.get("/data/:id", verifyToken, (req, res) => {
     });
 });
 
-// ✅ Fetch consultant summary (Requires authentication)
 router.get("/summary/:id", (req, res) => {
     const consultantId = Number(req.params.id);
-    console.log("🔍 Fetching summary for consultant ID:", consultantId);
+    console.log("Fetching summary for consultant ID:", consultantId);
   
     const query = `
       SELECT cr.id, u.name AS userName, cr.request_date AS date, cr.status  
@@ -66,18 +62,17 @@ router.get("/summary/:id", (req, res) => {
   
     db.query(query, [consultantId], (err, results) => {
       if (err) {
-        console.error("❌ Database Error:", err);
+        console.error("Database Error:", err);
         return res.status(500).json({ error: "Database error" });
       }
   
-      console.log("✅ API Response Sent to Frontend:", results); // <== ADD THIS
+      console.log("API Response Sent to Frontend:", results); 
       res.json(results);
     });
   });
   
-  // Fetch all consultant IDs
 router.get("/all-ids", (req, res) => {
-    const query = "SELECT id FROM consultants"; // Fetch only IDs
+    const query = "SELECT id FROM consultants"; 
 
     db.query(query, (err, results) => {
         if (err) {
@@ -85,14 +80,12 @@ router.get("/all-ids", (req, res) => {
             return res.status(500).json({ error: "Database error" });
         }
 
-        console.log("✅ Consultant IDs fetched:", results);
-        res.json(results); // Send IDs to frontend
+        console.log("Consultant IDs fetched:", results);
+        res.json(results); 
     });
 });
 
   
-
-// ✅ Handle consultation request (Requires authentication)
 router.post("/request", verifyToken, async (req, res) => {
     const { user_id, consultant_id } = req.body;
 
@@ -107,14 +100,13 @@ router.post("/request", verifyToken, async (req, res) => {
 
     db.query(query, [user_id, consultant_id], (err, results) => {
         if (err) {
-            console.error("❌ Database error:", err);
+            console.error("Database error:", err);
             return res.status(500).json({ error: "Database error while saving request." });
         }
         res.status(200).json({ message: "Consultation request sent successfully!" });
     });
 });
 
-// ✅ Fetch all consultant requests (Requires authentication)
 router.get("/requests/:consultantId", verifyToken, async (req, res) => {
     const { consultantId } = req.params;
 
@@ -130,47 +122,44 @@ router.get("/requests/:consultantId", verifyToken, async (req, res) => {
 
         db.query(query, [consultantId], (err, results) => {
             if (err) {
-                console.error("❌ Database error:", err);
+                console.error("Database error:", err);
                 return res.status(500).json({ error: "Database error." });
             }
             res.status(200).json(results);
         });
     } catch (error) {
-        console.error("❌ Error fetching consultant requests:", error);
+        console.error("Error fetching consultant requests:", error);
         res.status(500).json({ error: "Internal server error." });
     }
 });
 
-// ✅ Accept Consultation Request (Only the correct consultant can accept)
 router.put("/requests/:id/accept", verifyToken, async (req, res) => {
-    const { id } = req.params; // Request ID from URL
-    const consultantId = req.user.id; // Consultant ID from token
+    const { id } = req.params; 
+    const consultantId = req.user.id;
 
-    try {
-        // Step 1: Validate that the request belongs to this consultant
+    try{
         db.query("SELECT * FROM consultant_requests WHERE id = ?", [id], (err, request) => {
             if (err || request.length === 0) {
-                console.error("❌ Request not found:", err);
+                console.error("Request not found:", err);
                 return res.status(404).json({ error: "Request not found." });
             }
 
             if (request[0].consultant_id !== consultantId) {
-                console.error("❌ Unauthorized request acceptance attempt.");
+                console.error("Unauthorized request acceptance attempt.");
                 return res.status(403).json({ error: "Unauthorized. You can only accept requests assigned to you." });
             }
 
-            // Step 2: Update the specific request status to 'completed'
             db.query(
                 "UPDATE consultant_requests SET status = 'completed' WHERE id = ?",
                 [id],
                 (err, result) => {
                     if (err) {
-                        console.error("❌ Error updating consultation request:", err);
+                        console.error("Error updating consultation request:", err);
                         return res.status(500).json({ error: "Database update failed." });
                     }
 
                     if (result.affectedRows > 0) {
-                        console.log("✅ Request accepted successfully:", id);
+                        console.log("Request accepted successfully:", id);
                         return res.json({ success: true, message: "Request accepted successfully." });
                     } else {
                         return res.status(404).json({ error: "Request not found." });
@@ -179,7 +168,7 @@ router.put("/requests/:id/accept", verifyToken, async (req, res) => {
             );
         });
     } catch (error) {
-        console.error("❌ Error in request acceptance:", error);
+        console.error("Error in request acceptance:", error);
         res.status(500).json({ error: "Internal server error." });
     }
 });

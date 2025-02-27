@@ -69,7 +69,6 @@ const Signup = () => {
       <div className="bg-white shadow-lg rounded-xl p-8 max-w-md w-full">
         <h2 className="text-3xl font-bold text-center text-green-700 mb-6">Sign Up</h2>
 
-        {/* Name Input */}
         <div className="mb-4">
           <label className="block text-gray-700 font-medium mb-1">Name</label>
           <input
@@ -82,7 +81,6 @@ const Signup = () => {
           />
         </div>
 
-        {/* Email Input */}
         <div className="mb-4">
           <label className="block text-gray-700 font-medium mb-1">Email</label>
           <input
@@ -95,7 +93,6 @@ const Signup = () => {
           />
         </div>
 
-        {/* Password Input */}
         <div className="mb-4">
           <label className="block text-gray-700 font-medium mb-1">Password</label>
           <input
@@ -108,7 +105,6 @@ const Signup = () => {
           />
         </div>
 
-        {/* Signup Button */}
         <button
           onClick={handleSubmit}
           className="w-full bg-green-600 text-white py-3 mt-5 rounded-lg font-semibold text-lg hover:bg-green-700 transition duration-300 shadow-md"
@@ -116,11 +112,9 @@ const Signup = () => {
           Sign Up
         </button>
 
-        {/* Error & Success Messages */}
         {error && <p className="text-red-600 text-center mt-3 font-semibold">{error}</p>}
         {success && <p className="text-green-600 text-center mt-3 font-semibold">{success}</p>}
 
-        {/* Login Redirect */}
         <p className="text-center text-gray-600 mt-4">Already have an account?</p>
         <button
           onClick={() => navigate("/login")}

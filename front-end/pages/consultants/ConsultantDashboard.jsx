@@ -20,7 +20,7 @@ const ConsultantDashboard = () => {
 
     const fetchData = async () => {
       try {
-        console.log("🔍 Fetching consultant data...");
+        console.log("Fetching consultant data...");
         
         const consultantRes = await axios.get(`http://localhost:7777/api/consultants/data/${consultantId}`, {
           headers: { Authorization: `Bearer ${token}` },
@@ -34,7 +34,7 @@ const ConsultantDashboard = () => {
 
         setRequests(requestsRes.data);
       } catch (error) {
-        console.error("❌ Error fetching data:", error.response?.data || error.message);
+        console.error("Error fetching data:", error.response?.data || error.message);
         setError(error.response?.data?.error || "Error fetching data.");
       } finally {
         setLoading(false);

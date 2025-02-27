@@ -10,7 +10,6 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// ✅ Mount routes with correct prefixes
 app.use("/api/user", userRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/consultants", consultantRoutes);

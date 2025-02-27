@@ -7,14 +7,13 @@ const ConsultantSummary = () => {
   const [consultantIds, setConsultantIds] = useState([]);
 
   useEffect(() => {
-    // Fetch all consultant IDs first
     const fetchConsultantIds = async () => {
       try {
         const response = await axios.get("http://localhost:7777/api/consultants/all-ids");
         const ids = response.data.map((item) => item.id);
         setConsultantIds(ids);
       } catch (error) {
-        console.error("❌ Error fetching consultant IDs:", error);
+        console.error("Error fetching consultant IDs:", error);
       }
     };
 
@@ -22,7 +21,7 @@ const ConsultantSummary = () => {
   }, []);
 
   useEffect(() => {
-    // Fetch summaries for each consultant
+
     const fetchSummaries = async () => {
       try {
         const summaries = {};
@@ -34,7 +33,7 @@ const ConsultantSummary = () => {
         }
         setConsultantSummaries(summaries);
       } catch (error) {
-        console.error("❌ Error fetching consultant summaries:", error);
+        console.error(" Error fetching consultant summaries:", error);
       }
     };
 

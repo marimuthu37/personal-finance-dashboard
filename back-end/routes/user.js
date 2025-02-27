@@ -2,7 +2,6 @@ const express = require("express");
 const db = require("../db");
 const router = express.Router();
 
-// ✅ Get all users
 router.get("/", (req, res) => {
     db.query("SELECT * FROM user_details", (err, results) => {
         if (!err) {
@@ -13,7 +12,6 @@ router.get("/", (req, res) => {
     });
 });
 
-// ✅ Get payment summary for a specific user (requires user ID in query)
 router.get("/summary/:userId", (req, res) => {
     const { userId } = req.params; 
 
@@ -30,7 +28,6 @@ router.get("/summary/:userId", (req, res) => {
     });
 });
 
-// ✅ Add new payment for a specific user (requires user ID in request body)
 router.post("/summary/add", async (req, res) => {
     try {
         const { userId, description, category, amount, payment_method } = req.body;
@@ -51,7 +48,6 @@ router.post("/summary/add", async (req, res) => {
     }
 });
 
-// ✅ Update transaction (requires user ID in request body)
 router.put("/summary/update/:id", (req, res) => {
     const { id } = req.params;
     const { userId, description, category, amount, payment_method } = req.body;
@@ -73,7 +69,6 @@ router.put("/summary/update/:id", (req, res) => {
     });
 });
 
-// ✅ Delete transaction (requires user ID in request body)
 router.delete("/summary/delete/:id", (req, res) => {
     const { id } = req.params;
     const { userId } = req.body;
@@ -91,7 +86,6 @@ router.delete("/summary/delete/:id", (req, res) => {
     });
 });
 
-// ✅ Get last 3 transactions for a specific user
 router.get("/summary/last-three/:userId", async (req, res) => {
     const { userId } = req.params;
 
@@ -117,7 +111,7 @@ router.get("/summary/last-three/:userId", async (req, res) => {
 router.get("/financial-data", (req, res) => {
     db.query("SELECT * FROM financial_data", (err, results) => {
         if (err) {
-            console.error("❌ Database Error:", err);
+            console.error("Database Error:", err);
             return res.status(500).json({ error: "Database error" });
         }
         res.json(results);

@@ -27,7 +27,7 @@ const ConsultantReq = () => {
       );
       setRequests(response.data.filter((item) => item.status === "pending"));
     } catch (error) {
-      console.error("❌ Error fetching consultant requests:", error);
+      console.error("Error fetching consultant requests:", error);
     }
   };
 
@@ -45,7 +45,7 @@ const ConsultantReq = () => {
         setRequests((prevRequests) => prevRequests.filter((item) => item.id !== requestId));
       }
     } catch (error) {
-      console.error("❌ Error accepting request:", error.response?.data || error.message);
+      console.error("Error accepting request:", error.response?.data || error.message);
     }
   };
 

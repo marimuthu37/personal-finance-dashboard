@@ -4,26 +4,26 @@ import ConsultantNavbar from "../../src/components/ConsultantNavbar";
 
 const ConsultantSummary = () => {
   const [summary, setSummary] = useState([]);
-  const consultantId = localStorage.getItem("consultantId"); // Get from localStorage
+  const consultantId = localStorage.getItem("consultantId");
 
   useEffect(() => {
     const fetchSummary = async () => {
       if (!consultantId) {
-        console.error("❌ Consultant ID is missing!");
+        console.error("Consultant ID is missing!");
         return;
       }
 
       try {
-        console.log("🔍 Fetching completed consultations for consultant ID:", consultantId);
+        console.log("Fetching completed consultations for consultant ID:", consultantId);
         const response = await axios.get(
           `http://localhost:7777/api/consultants/summary/${consultantId}`,
           { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } }
         );
 
-        console.log("✅ Summary API Response:", response.data);
+        console.log("Summary API Response:", response.data);
         setSummary(response.data.filter((item) => item.status === "completed"));
       } catch (error) {
-        console.error("❌ Error fetching summary:", error);
+        console.error("Error fetching summary:", error);
       }
     };
 
